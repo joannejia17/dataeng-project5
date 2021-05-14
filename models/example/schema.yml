@@ -2,20 +2,114 @@
 version: 2
 
 models:
-    - name: my_first_dbt_model
-      description: "A starter dbt model"
+    - name: ada_check
+      description: "This table contains counts of ada-compliant subway stations per division in NYC"
       columns:
           - name: id
-            description: "The primary key for this table"
-            tests:
-                - unique
-                - not_null
+            description: ""          
 
-    - name: my_second_dbt_model
-      description: "A starter dbt model"
+    - name: ada_compliance_pct_by_borough
+      description: "This table contains the percentage of ada-compliant subway stations for each borough"
       columns:
           - name: id
-            description: "The primary key for this table"
-            tests:
+            description: ""
+    
+    - name: ada_negative_station_count 
+      description: "This table contains counts of non ada-compliant entrances per subway station"
+      columns:
+          - name: station_name
+            tests: 
                 - unique
                 - not_null
+            
+    - name: ada_negative_stations
+      description: "This table contains a list of non ada-compliant entrances in NYC"
+      columns:
+          - name: id
+            description: ""
+    
+    - name: ada_positive_station_count 
+      description: "This table contains counts of ada-compliant entrances per subway station""
+      columns:
+          - name: station_name
+            tests: 
+                - unique
+                - not_null       
+
+    - name: ada_positive_stations
+      description: "This table contains a list of ada-compliant entrances in NYC"
+      columns:
+          - name: ada_compliant
+            tests:
+                - accepted_values:
+                    values: [true]
+                    quote: false
+    
+    - name: borough_station_density
+      description: "This table contains on average how large an area an ada-compliant station 'covers' per borough"
+      columns:
+          - name: id
+            description: ""          
+
+    - name: borough_stations
+      description: "This table contains counts of subway stations per borough"
+      columns:
+          - name: id
+            description: ""
+            
+    - name: entry_exit_count
+      description: "This table contains counts of entrances and exits (only) per subway station"
+      columns:
+          - name: id
+            description: ""
+            
+    - name: incremental
+      description: "This table contains the trips data by hour of the day incrementally to help analyze traffic patterns"
+      columns:
+          - name: id
+            description: ""
+    
+    - name: pos_ranked
+      description: "This table contains the ranking of NYC boroughs in terms of their percentage of ada-compliant subway stations"
+      columns:
+          - name: id
+            description: ""       
+
+    - name: route_trip
+      description: "This table contains subway routs and trips on these routes"
+      columns:
+          - name: trip_id
+            tests: 
+                - unique
+    
+    - name: route_trip_count
+      description: "This table contains subway routes and trips on these routes"
+      columns:
+          - name: id
+            description: ""
+    
+    - name: station_ada_compliance_status
+      description: "This table contains the counts of different entrances per station"
+      columns:
+          - name: id
+            description: ""       
+
+    - name: station_borough_mapping
+      description: "This table contains the station name and its borough"
+      columns:
+          - name: station_name
+            tests: 
+                - not_null
+            
+sources:
+    - name: bigquery-public-data
+      database: bigquery-public-data
+      schema: new_york_subway
+      tables:
+          - name: routes
+          - name: station_complexes
+          - name: geo_nyc_borough_boundaries
+          - name: station_entrances
+          - name: stations
+          - name: stop_times
+          - name: trips

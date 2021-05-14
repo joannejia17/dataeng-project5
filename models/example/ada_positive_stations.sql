@@ -1,0 +1,1 @@
+select * from {{ source('bigquery-public-data', 'station_entrances') }} where ada_compliant =true
