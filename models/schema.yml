@@ -25,11 +25,14 @@ models:
     - name: ada_negative_stations
       description: "This table contains a list of non ada-compliant entrances in NYC"
       columns:
-          - name: id
-            description: ""
+          - name: ada_compliant
+            tests:
+                - accepted_values:
+                    values: [false]
+                    quote: false
     
     - name: ada_positive_station_count 
-      description: "This table contains counts of ada-compliant entrances per subway station""
+      description: "This table contains counts of ada-compliant entrances per subway station"
       columns:
           - name: station_name
             tests: 
@@ -64,7 +67,7 @@ models:
             description: ""
             
     - name: incremental
-      description: "This table contains the trips data by hour of the day incrementally to help analyze traffic patterns"
+      description: "This table gets the trips data by hour of the day incrementally to help analyze traffic patterns."
       columns:
           - name: id
             description: ""
